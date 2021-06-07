@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AddView: View {
+    @Environment(\.presentationMode) var presentationMode
     @ObservedObject var expenses: Expenses
     @State private var name = ""
     @State private var type = "Personal"
@@ -32,6 +33,7 @@ struct AddView: View {
                                         if let actualAmount = Int(amount) {
                                             let item = ExpenseItem(name: name, type: type, amount: actualAmount)
                                             expenses.items.append(item)
+                                            presentationMode.wrappedValue.dismiss()
                                         }
                                     }
             )
