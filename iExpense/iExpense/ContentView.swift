@@ -53,17 +53,18 @@ struct ContentView: View {
                         }
                         Spacer()
                         Text("$\(item.amount)")
+                            .foregroundColor(item.amount <= 10 ? .green : (item.amount <= 100 ? .blue : .orange))
                     }
                 }
                 .onDelete(perform: removeItems)
             }
             .navigationBarTitle("iExpense")
-            .navigationBarItems(trailing:
-                                    Button(action: {
-                                        showingAddExpense = true
-                                    }) {
-                                        Image(systemName: "plus")
-                                    }
+            .navigationBarItems(leading: EditButton(), trailing:                                        Button(action: {
+                                            showingAddExpense = true
+                                        }) {
+                                            Image(systemName: "plus")
+                                        }
+                                    
             )
             .sheet(isPresented: $showingAddExpense) {
                 AddView(expenses: expenses)

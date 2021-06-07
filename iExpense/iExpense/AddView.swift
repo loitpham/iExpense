@@ -14,6 +14,7 @@ struct AddView: View {
     @State private var type = "Personal"
     @State private var amount = ""
     static let types = ["Business", "Personal"]
+    @State private var showingAlert = false
     
     var body: some View {
         NavigationView {
@@ -32,9 +33,14 @@ struct AddView: View {
                                     Button("Save") {
                                         if let actualAmount = Int(amount) {
                                             let item = ExpenseItem(name: name, type: type, amount: actualAmount)
-                                            expenses.items.append(item)
+                                            expenses.items.append(item) 
                                             presentationMode.wrappedValue.dismiss()
+                                        } else {
+                                            showingAlert = true
                                         }
+                                    }
+                                    .alert(isPresented: $showingAlert) {
+                                        Alert(title: Text("Error"), message: Text("Amount entered is invalid."), dismissButton: .default(Text("Try again")))
                                     }
             )
         }
